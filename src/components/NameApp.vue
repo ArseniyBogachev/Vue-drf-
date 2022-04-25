@@ -1,7 +1,7 @@
 <template>
   <li>
     <NameItem v-bind:w="w" v-bind:i="i"/>
-    <button type="button" v-on:click="$emit('display',w)">o</button>
+    <button type="button" v-on:click="$emit('display',w)">↓</button>
     <button type="button" v-on:click="$emit('deleted',w.id)">x</button>
     <NameUpdate v-if="w.display" v-bind:w="w" v-on:update="update"/>
   </li>
@@ -25,7 +25,9 @@ export default {
   },
   methods:{
     update(title, event){
-      event.name = title
+      if (title){
+        event.name = title
+      }
       event.display = !event.display
     }
   }
@@ -33,5 +35,15 @@ export default {
 </script>
 
 <style scoped>
-
+  li{
+    border: 2px solid darkgrey;
+    margin-top: 30px;
+  }
+  button{
+    margin-right: 20px;
+    background-color: white;
+  }
+  button:hover{
+    box-shadow: 0 0 5px 2px darkgrey inset;
+  }
 </style>

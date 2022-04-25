@@ -24,6 +24,7 @@ export default {
       women: [
         {id: 1, name: 'Marina', lastname: 'Yudanova', age: 55, del: false, display: false},
         {id: 2, name: 'Daria', lastname: 'Utesheva', age: 20, del: false, display: false},
+        {id: 3, name: 'Ariana', lastname: 'Grande', age: 25, del: false, display: false},
       ]
     }
   },
@@ -36,11 +37,6 @@ export default {
     },
     display(ob){
       ob.display = !ob.display
-      // this.women = this.women.map(function(item, index, array){
-      //   if (index === item.id){
-      //     item.name = value
-      //   }
-      // })
     },
   },
   components: {
@@ -57,10 +53,10 @@ export default {
 
   h1{
     text-align: center;
+    font-family: "Roboto", "Lucida Grande", "DejaVu Sans", "Bitstream Vera Sans", Verdana, Arial, sans-serif;
   }
 
   ul{
     list-style: none;
-    text-align: center;
   }
 </style>
