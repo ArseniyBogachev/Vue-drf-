@@ -1,5 +1,5 @@
 import ButtonStyle from "@/components/UI/ButtonStyle";
 
-export default {
+export default [
     ButtonStyle
-}
+]

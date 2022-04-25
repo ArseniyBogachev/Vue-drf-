@@ -18,7 +18,7 @@
 <script>
 import NameUpdate from "@/components/NameUpdate";
 import NameItem from "@/components/NameItem";
-import ButtonStyle from "@/components/UI/ButtonStyle";
+// import ButtonStyle from "@/components/UI/ButtonStyle";
 export default {
   props: {
     w:{
@@ -31,7 +31,7 @@ export default {
   components:{
     NameUpdate,
     NameItem,
-    ButtonStyle,
+    // ButtonStyle,
   },
   methods:{
     update(title, event){
@@ -49,11 +49,4 @@ export default {
     border: 2px solid darkgrey;
     margin-top: 30px;
   }
-  /*button{*/
-  /*  margin-right: 20px;*/
-  /*  background-color: white;*/
-  /*}*/
-  /*button:hover{*/
-  /*  box-shadow: 0 0 5px 2px darkgrey inset;*/
-  /*}*/
 </style>

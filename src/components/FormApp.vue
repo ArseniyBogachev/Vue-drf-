@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import ButtonStyle from "@/components/UI/ButtonStyle";
+// import ButtonStyle from "@/components/UI/ButtonStyle";
 export default {
   data(){
     return {
@@ -24,7 +24,7 @@ export default {
     },
   },
   components:{
-    ButtonStyle,
+    // ButtonStyle,
   }
 }
 </script>
