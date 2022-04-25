@@ -3,9 +3,9 @@
     <input type="text" v-model="title">
     <ButtonStyle
         type="submit"
-        v-on:click="$emit('create', title)"
+        v-on:click="$emit('create', title)">
         Create
-    />
+    </ButtonStyle>
   </form>
 </template>
 

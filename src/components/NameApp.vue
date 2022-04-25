@@ -3,14 +3,14 @@
     <NameItem v-bind:w="w" v-bind:i="i"/>
     <ButtonStyle
         type="button"
-        v-on:click="$emit('display',w)"
-        ↓
-    />
+        v-on:click="$emit('display',w)">
+        &#8595;
+    </ButtonStyle>
     <ButtonStyle
         type="button"
-        v-on:click="$emit('deleted',w.id)"
+        v-on:click="$emit('deleted',w.id)">
         x
-    />
+    </ButtonStyle>
     <NameUpdate v-if="w.display" v-bind:w="w" v-on:update="update"/>
   </li>
 </template>

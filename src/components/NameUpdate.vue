@@ -3,9 +3,9 @@
     <input type="text" v-model="title">
     <ButtonStyle
         type="button"
-        v-on:click="$emit('update',title, w)"
+        v-on:click="$emit('update',title, w)">
         Update
-    />
+    </ButtonStyle>
   </div>
 </template>
 
