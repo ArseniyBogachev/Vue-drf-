@@ -1,8 +1,16 @@
 <template>
   <li>
     <NameItem v-bind:w="w" v-bind:i="i"/>
-    <button type="button" v-on:click="$emit('display',w)">↓</button>
-    <button type="button" v-on:click="$emit('deleted',w.id)">x</button>
+    <ButtonStyle
+        type="button"
+        v-on:click="$emit('display',w)"
+        ↓
+    />
+    <ButtonStyle
+        type="button"
+        v-on:click="$emit('deleted',w.id)"
+        x
+    />
     <NameUpdate v-if="w.display" v-bind:w="w" v-on:update="update"/>
   </li>
 </template>
@@ -10,6 +18,7 @@
 <script>
 import NameUpdate from "@/components/NameUpdate";
 import NameItem from "@/components/NameItem";
+import ButtonStyle from "@/components/UI/ButtonStyle";
 export default {
   props: {
     w:{
@@ -21,7 +30,8 @@ export default {
   name: "NameApp",
   components:{
     NameUpdate,
-    NameItem
+    NameItem,
+    ButtonStyle,
   },
   methods:{
     update(title, event){
@@ -39,11 +49,11 @@ export default {
     border: 2px solid darkgrey;
     margin-top: 30px;
   }
-  button{
-    margin-right: 20px;
-    background-color: white;
-  }
-  button:hover{
-    box-shadow: 0 0 5px 2px darkgrey inset;
-  }
+  /*button{*/
+  /*  margin-right: 20px;*/
+  /*  background-color: white;*/
+  /*}*/
+  /*button:hover{*/
+  /*  box-shadow: 0 0 5px 2px darkgrey inset;*/
+  /*}*/
 </style>

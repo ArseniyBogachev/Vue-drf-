@@ -1,11 +1,16 @@
 <template>
   <form v-on:submit.prevent="nullTrue">
     <input type="text" v-model="title">
-    <button type="submit" v-on:click="$emit('create', title)">Create</button>
+    <ButtonStyle
+        type="submit"
+        v-on:click="$emit('create', title)"
+        Create
+    />
   </form>
 </template>
 
 <script>
+import ButtonStyle from "@/components/UI/ButtonStyle";
 export default {
   data(){
     return {
@@ -17,20 +22,20 @@ export default {
     nullTrue(){
       this.title = ''
     },
-    // textTitle(event){
-    //   this.title = event.target.value
-    // }
+  },
+  components:{
+    ButtonStyle,
   }
 }
 </script>
 
 <style scoped>
-  button{
-    margin-right: 20px;
-    background-color: white;
-  }
-  button:hover{
-    box-shadow: 0 0 5px 2px darkgrey inset;
-  }
+  /*button{*/
+  /*  margin-right: 20px;*/
+  /*  background-color: white;*/
+  /*}*/
+  /*button:hover{*/
+  /*  box-shadow: 0 0 5px 2px darkgrey inset;*/
+  /*}*/
 </style>
 
