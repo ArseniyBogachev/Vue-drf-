@@ -4,7 +4,11 @@
     <hr>
     <FormApp v-on:create="create"/>
     <ul>
-      <NameApp v-for="(w, i) in women" :key="w.id" v-bind:w="w" v-bind:i="i" v-on:deleted="deleted" v-on:display="display"/>
+      <NameApp v-for="(w, i) in women"
+               :key="w.id" v-bind:w="w"
+               v-bind:i="i"
+               v-on:deleted="deleted"
+               v-on:display="display"/>
     </ul>
   </div>
 </template>
@@ -47,6 +51,10 @@ export default {
 </script>
 
 <style scoped>
+  div{
+    background-color: linen;
+  }
+
   h1{
     text-align: center;
   }
