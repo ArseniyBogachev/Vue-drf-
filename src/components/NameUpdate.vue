@@ -1,6 +1,6 @@
 <template>
   <div>
-    <input type="text" v-model="title">
+    <InputStyle v-model="title"/>
     <ButtonStyle
         type="button"
         v-on:click="$emit('update', title, w)">
@@ -10,6 +10,7 @@
 </template>
 
 <script>
+
 export default {
   data(){
     return {
@@ -29,12 +30,5 @@ export default {
 <style scoped>
   div{
     margin: auto 0;
-  }
-
-  input{
-    margin-right: 10px;
-  }
-  input:hover{
-    background-color: gainsboro;
   }
 </style>

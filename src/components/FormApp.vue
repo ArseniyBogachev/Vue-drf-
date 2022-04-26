@@ -1,6 +1,6 @@
 <template>
   <form v-on:submit.prevent="nullTrue">
-    <input type="text" v-model="title">
+    <InputStyle v-model="title"/>
     <ButtonStyle
         type="submit"
         v-on:click="$emit('create', title)">
@@ -27,12 +27,6 @@ export default {
 </script>
 
 <style scoped>
-  input{
-    margin-right: 10px;
-  }
 
-  input:hover{
-    background-color: gainsboro;
-  }
 </style>
 
