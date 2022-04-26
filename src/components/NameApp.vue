@@ -11,14 +11,13 @@
         v-on:click="$emit('deleted',w.id)">
         x
     </ButtonStyle>
-    <NameUpdate v-if="w.display" v-bind:w="w" v-on:update="update"/>
+    <NameUpdate v-if="w.display" v-bind:w="w" v-on:update="doSomething"/>
   </li>
 </template>
 
 <script>
 import NameUpdate from "@/components/NameUpdate";
 import NameItem from "@/components/NameItem";
-// import ButtonStyle from "@/components/UI/ButtonStyle";
 export default {
   props: {
     w:{
@@ -31,14 +30,10 @@ export default {
   components:{
     NameUpdate,
     NameItem,
-    // ButtonStyle,
   },
   methods:{
-    update(title, event){
-      if (title){
-        event.name = title
-      }
-      event.display = !event.display
+    doSomething(title, person){
+      this.$emit('update', title, person)
     }
   }
 }

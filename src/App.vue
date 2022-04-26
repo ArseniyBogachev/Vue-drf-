@@ -8,7 +8,8 @@
                :key="w.id" v-bind:w="w"
                v-bind:i="i"
                v-on:deleted="deleted"
-               v-on:display="display"/>
+               v-on:display="display"
+               v-on:update="update"/>
     </ul>
   </div>
 </template>
@@ -33,11 +34,19 @@ export default {
       this.women = this.women.filter(elem => elem.id !== id)
     },
     create(name){
-      this.women.push(new Object({id:Date.now(), name:name, lastname:'', age:0, del:false, display: false}))
+      if (name) {
+        this.women.push(new Object({id: Date.now(), name: name, lastname: '', age: 0, del: false, display: false}))
+      }
     },
     display(ob){
       ob.display = !ob.display
     },
+    update(title, person){
+      if (title){
+        this.women.find((item) => item.id === person.id).name = title
+      }
+      person.display = !person.display
+    }
   },
   components: {
     NameApp,

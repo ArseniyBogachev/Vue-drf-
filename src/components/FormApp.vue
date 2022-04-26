@@ -10,7 +10,7 @@
 </template>
 
 <script>
-// import ButtonStyle from "@/components/UI/ButtonStyle";
+
 export default {
   data(){
     return {
@@ -23,19 +23,16 @@ export default {
       this.title = ''
     },
   },
-  components:{
-    // ButtonStyle,
-  }
 }
 </script>
 
 <style scoped>
-  /*button{*/
-  /*  margin-right: 20px;*/
-  /*  background-color: white;*/
-  /*}*/
-  /*button:hover{*/
-  /*  box-shadow: 0 0 5px 2px darkgrey inset;*/
-  /*}*/
+  input{
+    margin-right: 10px;
+  }
+
+  input:hover{
+    background-color: gainsboro;
+  }
 </style>
 
