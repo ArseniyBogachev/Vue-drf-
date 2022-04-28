@@ -2,7 +2,12 @@
   <div>
     <h1>List Women</h1>
     <hr>
-    <FormApp v-on:create="create"/>
+    <MyDialog v-if="show" v-on:click="close_open_window">
+      <FormApp v-on:create="create"/>
+    </MyDialog>
+    <ButtonStyle v-else v-on:click="close_open_window">
+      Create user
+    </ButtonStyle>
     <ul>
       <NameApp v-for="(w, i) in women"
                :key="w.id" v-bind:w="w"
@@ -26,7 +31,8 @@ export default {
         {id: 1, name: 'Marina', lastname: 'Yudanova', age: 55, del: false, display: false},
         {id: 2, name: 'Daria', lastname: 'Utesheva', age: 20, del: false, display: false},
         {id: 3, name: 'Ariana', lastname: 'Grande', age: 25, del: false, display: false},
-      ]
+      ],
+      show: false,
     }
   },
   methods:{
@@ -36,6 +42,7 @@ export default {
     create(name){
       if (name) {
         this.women.push(new Object({id: Date.now(), name: name, lastname: '', age: 0, del: false, display: false}))
+        this.close_open_window()
       }
     },
     display(ob){
@@ -46,7 +53,13 @@ export default {
         this.women.find((item) => item.id === person.id).name = title
       }
       person.display = !person.display
-    }
+    },
+    close_open_window(){
+      this.show = !this.show
+    },
+    // close_window(){
+    //   this.show = false
+    // },
   },
   components: {
     NameApp,
