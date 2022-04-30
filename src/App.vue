@@ -2,13 +2,15 @@
   <div>
     <h1>List Women</h1>
     <hr>
-<!--    <ButtonStyle v-on:click="AxiosPerson">Get posts</ButtonStyle>-->
-    <MyDialog v-if="show" v-on:click="close_open_window">
-      <FormApp v-on:create="create"/>
-    </MyDialog>
-    <ButtonStyle v-else v-on:click="close_open_window">
-      Create user
-    </ButtonStyle>
+    <div class="create_and_sort">
+      <MyDialog v-if="show" v-on:click="close_open_window">
+        <FormApp v-on:create="create"/>
+      </MyDialog>
+      <ButtonStyle v-else v-on:click="close_open_window">
+        Create user
+      </ButtonStyle>
+      <MySelect v-model="selected_value" v-bind:option_list="option_list"/>
+    </div>
     <ul v-if="women.length">
       <NameApp v-for="(w, i) in women"
                :key="w.id" v-bind:w="w"
@@ -33,6 +35,11 @@ export default {
     return {
       women:[],
       show: false,
+      selected_value: '',
+      option_list: [
+        {value: 'name', name: 'Name'},
+        {value: 'age', name: 'Age'},
+      ],
     }
   },
   methods:{
@@ -89,5 +96,9 @@ export default {
 
   ul{
     list-style: none;
+  }
+  .create_and_sort{
+    display: flex;
+    justify-content: space-around;
   }
 </style>
