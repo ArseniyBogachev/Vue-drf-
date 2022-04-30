@@ -1,5 +1,5 @@
 <template>
-  <span>{{ i + 1 }}</span>
+  <span>{{ w.id }}</span>
   <span>{{ w.name }}</span>
   <span>{{ w.lastname }}</span>
   <span>{{ w.age }}</span>
