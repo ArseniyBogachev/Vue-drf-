@@ -27,17 +27,8 @@
       </transition-group>
     </ul>
     <div v-else>List person empty.</div>
-    <div class="pagination">
-<!--      <ul v-for="c in count_list" v-bind:key="c">-->
-<!--        <li class="countList">{{ c }}</li>-->
-<!--      </ul>-->
-      <ButtonStyle v-if="prev" v-on:click="AxiosPrevNext(prev)">
-        Prev
-      </ButtonStyle>
-      <ButtonStyle v-if="next" v-on:click="AxiosPrevNext(next)">
-        Next
-      </ButtonStyle>
-    </div>
+<!--    <PrevNext v-bind:next="next" v-bind:prev="prev" v-on:AxiosPrevNext="AxiosPrevNext"/>-->
+    <PaginationList v-bind:count_list="count_list" v-on:AxiosPrevNext="AxiosPrevNext"/>
   </div>
 </template>
 
@@ -45,6 +36,9 @@
 import NameApp from "@/components/NameApp";
 import FormApp from "@/components/FormApp";
 import axios from 'axios';
+import ButtonStyle from "@/components/UI/ButtonStyle";
+// import PrevNext from "@/components/PrevNext";
+import PaginationList from "@/components/PaginationList";
 
 export default {
   name: 'App',
@@ -86,24 +80,34 @@ export default {
     close_open_window(){
       this.show = !this.show
     },
-    async AxiosPrevNext(url){
-      try{
+    async AxiosPrevNext(url, index){
+      if (index === undefined){
+        try{
         const response = await axios.get(url);
         this.women = response.data.results;
         this.next = response.data.next;
         this.prev = response.data.previous;
+        }
+        catch (e){
+          alert('Error Data');
+        }
       }
-      catch (e){
-        alert('Error Data');
+      else{
+        try{
+          const response = await axios.get(url + `?offset=${index * this.women.length}`);
+          this.women = response.data.results;
+        }
+        catch (e){
+          alert('Error Data');
+        }
       }
     },
     async AxiosPerson(){
       try{
-        const response = await axios.get('http://127.0.0.1:8000/api/v1/womenlist?limit=4&offset=1');
+        const response = await axios.get('http://127.0.0.1:8000/api/v1/womenlist');
         this.women = response.data.results;
         this.count = response.data.count;
         this.next = response.data.next;
-        // this.prev = response.data.previous;
         this.count_list = Math.ceil(this.count / this.women.length)
       }
       catch (e){
@@ -118,8 +122,11 @@ export default {
     this.AxiosPerson();
   },
   components: {
+    ButtonStyle,
     NameApp,
-    FormApp
+    FormApp,
+    // PrevNext,
+    PaginationList,
   },
   computed:{
     sort_array(){
@@ -172,16 +179,5 @@ export default {
   }
   .list-move{
     transition: transform 0.5s ease;
-  }
-  .pagination{
-    display: flex;
-    justify-content: space-between;
-    width: 200px;
-  }
-  .countList{
-    border: 1px solid black;
-    width: 20px;
-    height: 20px;
-    text-align: center;
   }
 </style>

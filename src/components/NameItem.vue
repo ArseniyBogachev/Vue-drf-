@@ -20,9 +20,11 @@ export default {
 
 <style scoped>
   span{
+    margin-top: 65px;
     display: inline-block;
     margin-right: 15%;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    border: 2px solid darkgrey;
+    /*border: 2px solid darkgrey;*/
+    height: 90px;
   }
 </style>
