@@ -1,12 +1,10 @@
 <template>
-  <div class="app">
-    <router-view></router-view>
-  </div>
+  <div>Добро пожаловать!!!</div>
 </template>
 
 <script>
 export default {
-
+  name: "MainRouter"
 }
 </script>
 
