@@ -1,10 +1,12 @@
 <template>
-  <div>Добро пожаловать!!!</div>
+  <div>
+    Учебный сайт с использованием Vue 3 и DRF.
+  </div>
 </template>
 
 <script>
 export default {
-  name: "MainRouter"
+  name: "AboutRouter"
 }
 </script>
 

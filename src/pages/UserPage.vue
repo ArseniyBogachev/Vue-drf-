@@ -113,7 +113,7 @@ export default {
         this.page += 1;
         }
         catch (e){
-          alert('Error Data');
+          console.log('Error Data');
         }
     },
     async AxiosPerson(){
