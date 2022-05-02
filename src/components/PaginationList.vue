@@ -3,7 +3,7 @@
       <ul v-for="(c,i) in count_list" v-bind:key="c">
         <li class="countList">
           <ButtonStyle
-            v-bind:class="{ 'active': true }"
+            v-bind:class="{ 'active': page === i}"
             v-on:click="$emit('AxiosPrevNext','http://127.0.0.1:8000/api/v1/womenlist', i)">
             {{ c }}
           </ButtonStyle>
@@ -16,6 +16,9 @@
 export default {
   props:{
     count_list: {
+      type: Number,
+    },
+    page:{
       type: Number,
     }
   },

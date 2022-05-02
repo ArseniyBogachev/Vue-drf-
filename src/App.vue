@@ -28,7 +28,8 @@
     </ul>
     <div v-else>List person empty.</div>
 <!--    <PrevNext v-bind:next="next" v-bind:prev="prev" v-on:AxiosPrevNext="AxiosPrevNext"/>-->
-    <PaginationList v-bind:count_list="count_list" v-on:AxiosPrevNext="AxiosPrevNext"/>
+<!--    <PaginationList v-bind:count_list="count_list" v-bind:page="page" v-on:AxiosPrevNext="AxiosPrevNext"/>-->
+    <div ref="observer" class="observer"></div>
   </div>
 </template>
 
@@ -38,7 +39,7 @@ import FormApp from "@/components/FormApp";
 import axios from 'axios';
 import ButtonStyle from "@/components/UI/ButtonStyle";
 // import PrevNext from "@/components/PrevNext";
-import PaginationList from "@/components/PaginationList";
+// import PaginationList from "@/components/PaginationList";
 
 export default {
   name: 'App',
@@ -47,6 +48,7 @@ export default {
       women:[],
       next: '',
       prev: '',
+      page: 1,
       count: Number,
       count_list: Number,
       show: false,
@@ -96,11 +98,23 @@ export default {
         try{
           const response = await axios.get(url + `?offset=${index * this.women.length}`);
           this.women = response.data.results;
+          this.page = index;
         }
         catch (e){
           alert('Error Data');
         }
       }
+    },
+    async AxiosLoadingLine(url){
+      try{
+        const response = await axios.get(url);
+        this.women = [...this.women, ...response.data.results];
+        this.next = response.data.next;
+        this.page += 1;
+        }
+        catch (e){
+          alert('Error Data');
+        }
     },
     async AxiosPerson(){
       try{
@@ -120,13 +134,24 @@ export default {
   },
   mounted() {
     this.AxiosPerson();
+    const options = {
+      rootMargin: '0px',
+      threshold: 1.0,
+    }
+    const callback = (entries) => {
+        if (entries[0].isIntersecting && this.count_list !== this.page){
+          this.AxiosLoadingLine(this.next)
+        }
+    };
+    const observer = new IntersectionObserver(callback, options);
+    observer.observe(this.$refs.observer)
   },
   components: {
     ButtonStyle,
     NameApp,
     FormApp,
     // PrevNext,
-    PaginationList,
+    // PaginationList,
   },
   computed:{
     sort_array(){
@@ -179,5 +204,9 @@ export default {
   }
   .list-move{
     transition: transform 0.5s ease;
+  }
+  .observer{
+    width: 100%;
+    height: 50px;
   }
 </style>
