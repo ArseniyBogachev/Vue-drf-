@@ -2,6 +2,7 @@ import MainRouter from "@/pages/MainRouter";
 import {createRouter, createWebHistory} from "vue-router"
 import UserPage from "@/pages/UserPage";
 import AboutRouter from "@/pages/AboutRouter";
+import OpenPage from "@/pages/OpenPage";
 
 const routes = [
     {
@@ -15,6 +16,10 @@ const routes = [
     {
         path: '/about',
         component: AboutRouter,
+    },
+    {
+        path: '/person/:id',
+        component: OpenPage,
     }
 ]
 

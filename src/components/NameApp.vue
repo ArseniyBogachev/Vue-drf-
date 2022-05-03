@@ -3,6 +3,11 @@
     <NameItem v-bind:w="w" v-bind:i="i"/>
     <ButtonStyle
         type="button"
+        v-on:click="$router.push(`/person/${w.id}`)">
+        Open
+    </ButtonStyle>
+    <ButtonStyle
+        type="button"
         v-on:click="$emit('display',w)">
         &#8595;
     </ButtonStyle>
