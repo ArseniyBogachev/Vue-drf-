@@ -29,7 +29,7 @@
     <div v-else>List person empty.</div>
 <!--    <PrevNext v-bind:next="next" v-bind:prev="prev" v-on:AxiosPrevNext="AxiosPrevNext"/>-->
 <!--    <PaginationList v-bind:count_list="count_list" v-bind:page="page" v-on:AxiosPrevNext="AxiosPrevNext"/>-->
-    <div ref="observer" class="observer"></div>
+    <div v-intersection="{func: this.AxiosLoadingLine}" class="observer"></div>
   </div>
 </template>
 
@@ -105,7 +105,7 @@ export default {
         }
       }
     },
-    async AxiosLoadingLine(url){
+    async AxiosLoadingLine(url=this.next){
       try{
         const response = await axios.get(url);
         this.women = [...this.women, ...response.data.results];
@@ -134,17 +134,17 @@ export default {
   },
   mounted() {
     this.AxiosPerson();
-    const options = {
-      rootMargin: '0px',
-      threshold: 1.0,
-    }
-    const callback = (entries) => {
-        if (entries[0].isIntersecting && this.count_list !== this.page){
-          this.AxiosLoadingLine(this.next)
-        }
-    };
-    const observer = new IntersectionObserver(callback, options);
-    observer.observe(this.$refs.observer)
+    // const options = {
+    //   rootMargin: '0px',
+    //   threshold: 1.0,
+    // }
+    // const callback = (entries) => {
+    //     if (entries[0].isIntersecting && this.count_list !== this.page){
+    //       this.AxiosLoadingLine(this.next)
+    //     }
+    // };
+    // const observer = new IntersectionObserver(callback, options);
+    // observer.observe(this.$refs.observer)
   },
   components: {
     ButtonStyle,
