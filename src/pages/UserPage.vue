@@ -10,7 +10,7 @@
         Create user
       </ButtonStyle>
       <div>
-        <InputStyle v-model="search_value" v-on:input="search_list" placeholder="Search"/>
+        <InputStyle v-model="search_value" placeholder="Search"/>
       </div>
       <MySelect v-model="selected_value" v-bind:option_list="option_list"/>
     </div>
@@ -37,7 +37,6 @@
 import NameApp from "@/components/NameApp";
 import FormApp from "@/components/FormApp";
 import axios from 'axios';
-import ButtonStyle from "@/components/UI/ButtonStyle";
 // import PrevNext from "@/components/PrevNext";
 // import PaginationList from "@/components/PaginationList";
 
@@ -128,9 +127,9 @@ export default {
         alert('Error Data');
       }
     },
-    search_list(event){
-      this.women.filter((item) => item['name'].includes(event.target.value))
-    },
+    // search_list(event){
+    //   this.women.filter((item) => item['name'].includes(event.target.value))
+    // },
   },
   mounted() {
     this.AxiosPerson();
@@ -147,7 +146,6 @@ export default {
     // observer.observe(this.$refs.observer)
   },
   components: {
-    ButtonStyle,
     NameApp,
     FormApp,
     // PrevNext,
@@ -168,6 +166,7 @@ export default {
     search_elem_array(){
       return this.sort_array.filter((item) => item['name'].toLowerCase().includes(this.search_value.toLowerCase()))
     }
+
   },
 }
 </script>

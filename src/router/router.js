@@ -3,6 +3,7 @@ import {createRouter, createWebHistory} from "vue-router"
 import UserPage from "@/pages/UserPage";
 import AboutRouter from "@/pages/AboutRouter";
 import OpenPage from "@/pages/OpenPage";
+import StorePage from "@/pages/StorePage";
 
 const routes = [
     {
@@ -20,6 +21,10 @@ const routes = [
     {
         path: '/person/:id',
         component: OpenPage,
+    },
+    {
+        path: '/store',
+        component: StorePage,
     }
 ]
 
