@@ -79,5 +79,5 @@ export const postModule = {
           }
         },
     },
-    namespace: true,
+    namespaced: true,
 }

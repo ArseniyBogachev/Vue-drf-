@@ -4,6 +4,8 @@ import UserPage from "@/pages/UserPage";
 import AboutRouter from "@/pages/AboutRouter";
 import OpenPage from "@/pages/OpenPage";
 import StorePage from "@/pages/StorePage";
+import RegisterUser from "@/pages/RegisterUser";
+import LoginUser from "@/pages/LoginUser";
 
 const routes = [
     {
@@ -25,6 +27,14 @@ const routes = [
     {
         path: '/store',
         component: StorePage,
+    },
+    {
+        path: '/register',
+        component: RegisterUser,
+    },
+    {
+        path: '/login',
+        component: LoginUser,
     }
 ]
 

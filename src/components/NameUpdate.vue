@@ -1,9 +1,11 @@
 <template>
   <div>
-    <InputStyle v-model="title"/>
+    <InputStyle v-model="name"/>
+    <InputStyle v-model="lastname"/>
+    <InputStyle v-model="age"/>
     <ButtonStyle
         type="button"
-        v-on:click="$emit('update', title, w)">
+        v-on:click="$emit('update', {'name':name, 'lastname':lastname, 'age':age}, w)">
         Update
     </ButtonStyle>
   </div>
@@ -14,7 +16,9 @@
 export default {
   data(){
     return {
-      title: '',
+      name: '',
+      lastname: '',
+      age: '',
     }
   },
   props: {

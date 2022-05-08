@@ -1,9 +1,11 @@
 <template>
   <form v-on:submit.prevent="nullTrue">
-    <InputStyle v-model="title"/>
+    <InputStyle v-model="name"/>
+    <InputStyle v-model="lastname"/>
+    <InputStyle v-model="age"/>
     <ButtonStyle
         type="submit"
-        v-on:click="$emit('create', title)">
+        v-on:click="$emit('create', this.name, this.lastname, this.age)">
         Create
     </ButtonStyle>
   </form>
@@ -12,9 +14,12 @@
 <script>
 
 export default {
+  components: {},
   data(){
     return {
-      title: '',
+      name: '',
+      lastname: '',
+      age: '',
     }
   },
   name: "FormApp",

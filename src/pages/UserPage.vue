@@ -63,31 +63,48 @@ export default {
     deleted(id){
       this.women = this.women.filter(elem => elem.id !== id)
     },
-    create(name){
-      if (name) {
-        this.women.push(new Object({id: Date.now(), name: name, lastname: '', age: 0, del: false, display: false}))
+    create(name, lastname, age){
+      if (name && lastname && age) {
+        let newPost = new Object({name: name, lastname: lastname, age: age, del: false, display: false})
+        console.log(newPost)
+        this.AxiosPostPerson(newPost)
         this.close_open_window()
+      }
+      else{
+        alert('Error Text')
       }
     },
     display(ob){
       ob.display = !ob.display
     },
-    update(title, person){
-      if (title){
-        this.women.find((item) => item.id === person.id).name = title;
+    update(dict, person){
+      for (let i in dict){
+        if (dict[i] === ''){
+          delete dict[i]
+        }
       }
+      this.AxiosUpdatePerson(dict, person)
       person.display = !person.display;
     },
     close_open_window(){
       this.show = !this.show
     },
+    async AxiosUpdatePerson(data, person){
+      try{
+        await axios.put(`http://127.0.0.1:8000/api/v1/womenupdate/${person.id}/`,data)
+        await this.AxiosPerson()
+      }
+      catch (e){
+        alert('Error Data');
+      }
+    },
     async AxiosPrevNext(url, index){
       if (index === undefined){
         try{
-        const response = await axios.get(url);
-        this.women = response.data.results;
-        this.next = response.data.next;
-        this.prev = response.data.previous;
+          const response = await axios.get(url);
+          this.women = response.data.results;
+          this.next = response.data.next;
+          this.prev = response.data.previous;
         }
         catch (e){
           alert('Error Data');
@@ -106,14 +123,14 @@ export default {
     },
     async AxiosLoadingLine(url=this.next){
       try{
-        const response = await axios.get(url);
-        this.women = [...this.women, ...response.data.results];
-        this.next = response.data.next;
-        this.page += 1;
+        const response = await axios.get(url)
+        this.women = [...this.women, ...response.data.results]
+        this.next = response.data.next
+        this.page += 1
         }
-        catch (e){
-          console.log('Error Data');
-        }
+      catch (e){
+        console.log('Error Data');
+      }
     },
     async AxiosPerson(){
       try{
@@ -122,6 +139,15 @@ export default {
         this.count = response.data.count;
         this.next = response.data.next;
         this.count_list = Math.ceil(this.count / this.women.length)
+      }
+      catch (e){
+        alert('Error Data');
+      }
+    },
+    async AxiosPostPerson(data){
+      try{
+        await axios.post('http://127.0.0.1:8000/api/v1/womenlist', data);
+        await this.AxiosPerson()
       }
       catch (e){
         alert('Error Data');

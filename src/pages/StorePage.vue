@@ -14,7 +14,7 @@
       </div>
       <MySelect v-model="selected_value" v-bind:option_list="option_list"/>
     </div>
-    <ul v-if="women.length">
+    <ul v-if="this.women.length">
       <transition-group name="list">
         <NameApp v-for="(w, i) in search_elem_array"
                :key="w.id"
@@ -66,7 +66,7 @@ export default {
       this.show = !this.show
     },
     ...mapMutations({
-      setPage: 'post/setPage'
+      setPage: 'post/setPage',
     }),
     ...mapActions({
       AxiosLoadingLine: 'post/AxiosLoadingLine',

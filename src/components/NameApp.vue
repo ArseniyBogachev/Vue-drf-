@@ -37,8 +37,8 @@ export default {
     NameItem,
   },
   methods:{
-    doSomething(title, person){
-      this.$emit('update', title, person)
+    doSomething(dict, person){
+      this.$emit('update', dict, person)
     }
   }
 }
