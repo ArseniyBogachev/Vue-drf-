@@ -1,4 +1,5 @@
 import axios from "axios";
+// import StoragePlugin from "vue-web-storage";
 
 export const postModule = {
     state: () => ({
@@ -14,6 +15,9 @@ export const postModule = {
             {value: 'age', name: 'Age'},
         ],
         search_value: '',
+        // token: '',
+        login: '',
+        password: '',
     }),
     getters: {
         sort_array(state){
@@ -50,9 +54,15 @@ export const postModule = {
         setSelected(state, selected_value) {
             state.selected_value = selected_value;
         },
-        setSearch(state, search_value) {
-            state.search_value = search_value;
+        setlogin(state, login) {
+            state.login = login;
         },
+        setpassword(state, password) {
+            state.password = password;
+        },
+        // settoken(state, token) {
+        //     state.token = token;
+        // },
     },
     actions: {
         async AxiosLoadingLine({state}){
@@ -68,7 +78,7 @@ export const postModule = {
         },
         async AxiosPerson({state}){
           try{
-            const response = await axios.get('http://127.0.0.1:8000/api/v1/womenlist');
+            const response = await axios.get('http://127.0.0.1:8000/api/v1/womenlist', { headers: {"Authorization" : `Token ${state.$localStorage.get('token')}`} });
             state.women = response.data.results;
             state.count = response.data.count;
             state.next = response.data.next;
@@ -76,6 +86,18 @@ export const postModule = {
           }
           catch (e){
             alert('Error Data');
+          }
+        },
+        async AxiosPostLogin({state}){
+          try{
+            const response = await axios.post('http://127.0.0.1:8000/auth/token/login/', {"password": state.password ,"username": state.login,});
+            state.login = state.password = ''
+            // localStorage.token = response.data.auth_token
+            // state.token = localStorage.token
+            state.$localStorage.set('token', response.data.auth_token)
+          }
+          catch(e){
+            console.log(e)
           }
         },
     },

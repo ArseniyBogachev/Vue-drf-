@@ -27,6 +27,7 @@
       </transition-group>
     </ul>
     <div v-else>List person empty.</div>
+    <div>{{token}}</div>
     <div v-intersection="{func: this.AxiosLoadingLine}" class="observer"></div>
   </div>
 </template>
@@ -67,6 +68,7 @@ export default {
     },
     ...mapMutations({
       setPage: 'post/setPage',
+      settoken: 'post/settoken',
     }),
     ...mapActions({
       AxiosLoadingLine: 'post/AxiosLoadingLine',
@@ -94,6 +96,7 @@ export default {
       selected_value: state => state.post.selected_value,
       option_list: state => state.post.option_list,
       search_value: state => state.post.search_value,
+      token:state => state.post.token,
     }),
   },
 }

@@ -27,6 +27,7 @@
       </transition-group>
     </ul>
     <div v-else>List person empty.</div>
+<!--    <div>{{token}}</div>-->
 <!--    <PrevNext v-bind:next="next" v-bind:prev="prev" v-on:AxiosPrevNext="AxiosPrevNext"/>-->
 <!--    <PaginationList v-bind:count_list="count_list" v-bind:page="page" v-on:AxiosPrevNext="AxiosPrevNext"/>-->
     <div v-intersection="{func: this.AxiosLoadingLine}" class="observer"></div>
@@ -134,7 +135,7 @@ export default {
     },
     async AxiosPerson(){
       try{
-        const response = await axios.get('http://127.0.0.1:8000/api/v1/womenlist');
+        const response = await axios.get('http://127.0.0.1:8000/api/v1/womenlist', { headers: {"Authorization" : `Token ${this.$localStorage.get('token')}`} });
         this.women = response.data.results;
         this.count = response.data.count;
         this.next = response.data.next;
@@ -146,7 +147,7 @@ export default {
     },
     async AxiosPostPerson(data){
       try{
-        await axios.post('http://127.0.0.1:8000/api/v1/womenlist', data);
+        await axios.post('http://127.0.0.1:8000/api/v1/womenlist', data, { headers: {"Authorization" : `Token ${this.$localStorage.get('token')}`} });
         await this.AxiosPerson()
       }
       catch (e){

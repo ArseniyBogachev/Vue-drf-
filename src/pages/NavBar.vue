@@ -2,6 +2,7 @@
   <div class="nav_bar">
     <h1 v-on:click="$router.push('/')">Practice site</h1>
     <ul class="button">
+      <ButtonStyle v-on:click="$router.push('/store')" style="width: 200px; height: 70px; font-size: 20px">Store</ButtonStyle>
       <ButtonStyle v-on:click="$router.push('/person')" style="width: 200px; height: 70px; font-size: 20px">Person</ButtonStyle>
       <ButtonStyle v-on:click="$router.push('/about')" style="width: 200px; height: 70px; font-size: 20px">About</ButtonStyle>
     </ul>

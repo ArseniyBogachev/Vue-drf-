@@ -15,6 +15,7 @@ const routes = [
     {
         path: '/person',
         component: UserPage,
+        // props: { token: this.token }
     },
     {
         path: '/about',
