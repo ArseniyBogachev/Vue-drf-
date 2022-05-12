@@ -135,7 +135,7 @@ export default {
     },
     async AxiosPerson(){
       try{
-        const response = await axios.get('http://127.0.0.1:8000/api/v1/womenlist', { headers: {"Authorization" : `Token ${this.$localStorage.get('token')}`} });
+        const response = await axios.get('http://127.0.0.1:8000/api/v1/womenlist', { headers: {"Authorization" : `Token ${this.$localStorage.get('token')}`}});
         this.women = response.data.results;
         this.count = response.data.count;
         this.next = response.data.next;
