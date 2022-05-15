@@ -1,7 +1,6 @@
 <template>
   <div class="wrapper">
     <div class="box" v-on:click.stop="">
-      <p>Create person</p>
       <div class="input">
         <slot></slot>
       </div>
@@ -20,6 +19,7 @@ export default {
     position: fixed;
     width: 100%;
     height: 100%;
+    z-index: 2;
     top: 0;
     left: 0;
     right: 0;

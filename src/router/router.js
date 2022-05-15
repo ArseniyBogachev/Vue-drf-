@@ -6,6 +6,7 @@ import OpenPage from "@/pages/OpenPage";
 import StorePage from "@/pages/StorePage";
 import RegisterUser from "@/pages/RegisterUser";
 import LoginUser from "@/pages/LoginUser";
+import MeUser from "@/pages/MeUser";
 
 const routes = [
     {
@@ -15,7 +16,6 @@ const routes = [
     {
         path: '/person',
         component: UserPage,
-        // props: { token: this.token }
     },
     {
         path: '/about',
@@ -36,7 +36,11 @@ const routes = [
     {
         path: '/login',
         component: LoginUser,
-    }
+    },
+    {
+        path: '/user/:slug',
+        component: MeUser,
+    },
 ]
 
 const router = createRouter({

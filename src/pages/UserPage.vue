@@ -4,6 +4,7 @@
     <hr>
     <div class="create_and_sort">
       <MyDialog v-if="show" v-on:click="close_open_window">
+        <p>Create person</p>
         <FormApp v-on:create="create"/>
       </MyDialog>
       <ButtonStyle v-else v-on:click="close_open_window">
@@ -96,7 +97,7 @@ export default {
         await this.AxiosPerson()
       }
       catch (e){
-        alert('Error Data');
+        console.log('Error Data');
       }
     },
     async AxiosPrevNext(url, index){
@@ -108,7 +109,7 @@ export default {
           this.prev = response.data.previous;
         }
         catch (e){
-          alert('Error Data');
+          console.log('Error Data');
         }
       }
       else{
@@ -118,7 +119,7 @@ export default {
           this.page = index;
         }
         catch (e){
-          alert('Error Data');
+          console.log('Error Data');
         }
       }
     },
@@ -142,7 +143,7 @@ export default {
         this.count_list = Math.ceil(this.count / this.women.length)
       }
       catch (e){
-        alert('Error Data');
+        console.log('Error Data');
       }
     },
     async AxiosPostPerson(data){
@@ -151,7 +152,7 @@ export default {
         await this.AxiosPerson()
       }
       catch (e){
-        alert('Error Data');
+        console.log('Error Data');
       }
     },
     // search_list(event){

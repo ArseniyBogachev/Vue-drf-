@@ -6,7 +6,6 @@
     <InputStyle class="input" placeholder="login" v-model="login"/>
     <InputStyle class="input" type="password" placeholder="password" v-model="password"/>
     <ButtonStyle class="button" v-on:click="AxiosPostLogin">Log in</ButtonStyle>
-<!--    {{this.$localStorage.get('token')}}-->
   </div>
 </template>
 
@@ -36,6 +35,12 @@ export default {
         const response = await axios.post('http://127.0.0.1:8000/auth/token/login/', {"password": this.password ,"username": this.login,});
         this.login = this.password = ''
         this.$localStorage.set('token', response.data.auth_token)
+        const user = await axios.get('http://127.0.0.1:8000/api/v1/auth/users/me/', {headers: {"Authorization" : `Token ${this.$localStorage.get('token')}`}})
+        this.$localStorage.set('username', user.data.username)
+        this.$localStorage.set('first_name', user.data.first_name)
+        this.$localStorage.set('last_name', user.data.last_name)
+        this.$localStorage.set('email', user.data.email)
+        location.reload()
       }
       catch(e){
         console.log(e)
