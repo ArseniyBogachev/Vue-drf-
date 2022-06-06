@@ -39,7 +39,7 @@ export default {
     async AxiosPostRegister(data){
       this.exception_name = this.exception_email = this.exception_password = this.exception_error = []
       try{
-        await axios.post('http://127.0.0.1:8000/api/v1/register/', {'first_name': data.firstname ,'last_name': data.lastname,'email': data.email, 'username': data.name, 'password': data.password});
+        await axios.post('http://127.0.0.1:8000/api/v1/register', {'first_name': data.firstname ,'last_name': data.lastname,'email': data.email, 'username': data.name, 'password': data.password});
         this.name = this.firstname = this.lastname = this.email = this.password = ''
       }
       catch(e){

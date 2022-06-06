@@ -1,5 +1,6 @@
 <template>
   <div>
+    <p v-if="error_authorize" class="error_authorize">You are not authorized.</p>
     <h1>List Women</h1>
     <hr>
     <div class="create_and_sort">
@@ -8,7 +9,7 @@
         <FormApp v-on:create="create"/>
       </MyDialog>
       <ButtonStyle v-else v-on:click="close_open_window">
-        Create user
+        Create person
       </ButtonStyle>
       <div>
         <InputStyle v-model="search_value" placeholder="Search"/>
@@ -21,9 +22,11 @@
                :key="w.id"
                v-bind:w="w"
                v-bind:i="i"
-               v-on:deleted="deleted"
                v-on:display="display"
                v-on:update="update"
+               v-on:AxiosLikePerson="AxiosLikePerson"
+               v-bind:error_del="error_del"
+               v-on:AxiosDeletePerson="AxiosDeletePerson"
         />
       </transition-group>
     </ul>
@@ -54,6 +57,8 @@ export default {
       count_list: Number,
       show: false,
       selected_value: '',
+      error_authorize: false,
+      error_del: false,
       option_list: [
         {value: 'name', name: 'Name'},
         {value: 'age', name: 'Age'},
@@ -68,7 +73,6 @@ export default {
     create(name, lastname, age){
       if (name && lastname && age) {
         let newPost = new Object({name: name, lastname: lastname, age: age, del: false, display: false})
-        console.log(newPost)
         this.AxiosPostPerson(newPost)
         this.close_open_window()
       }
@@ -84,6 +88,9 @@ export default {
         if (dict[i] === ''){
           delete dict[i]
         }
+        else{
+          person[i] = dict[i]
+        }
       }
       this.AxiosUpdatePerson(dict, person)
       person.display = !person.display;
@@ -91,13 +98,28 @@ export default {
     close_open_window(){
       this.show = !this.show
     },
-    async AxiosUpdatePerson(data, person){
+    async AxiosDeletePerson(person){
       try{
-        await axios.put(`http://127.0.0.1:8000/api/v1/womenupdate/${person.id}/`,data)
-        await this.AxiosPerson()
+        await axios.delete(`http://127.0.0.1:8000/api/v1/womendelete/${person}/`, {headers: {"Authorization" : `Bearer ${this.$localStorage.get('access')}`}})
+        this.deleted(person)
       }
       catch (e){
-        console.log('Error Data');
+        if (e.response.status === 403){
+          this.error_del = true
+        }
+        if (e.response.status === 401){
+          this.error_authorize = true
+        }
+      }
+    },
+    async AxiosUpdatePerson(data, person){
+      try{
+        await axios.put(`http://127.0.0.1:8000/api/v1/womenupdate/${person.id}/`,data, {headers: {"Authorization" : `Bearer ${this.$localStorage.get('access')}`}})
+      }
+      catch (e){
+        if (e.response.status === 401){
+          this.error_authorize = true
+        }
       }
     },
     async AxiosPrevNext(url, index){
@@ -136,7 +158,7 @@ export default {
     },
     async AxiosPerson(){
       try{
-        const response = await axios.get('http://127.0.0.1:8000/api/v1/womenlist', { headers: {"Authorization" : `Token ${this.$localStorage.get('token')}`}});
+        const response = await axios.get('http://127.0.0.1:8000/api/v1/womenlist');
         this.women = response.data.results;
         this.count = response.data.count;
         this.next = response.data.next;
@@ -148,19 +170,84 @@ export default {
     },
     async AxiosPostPerson(data){
       try{
-        await axios.post('http://127.0.0.1:8000/api/v1/womenlist', data, { headers: {"Authorization" : `Token ${this.$localStorage.get('token')}`} });
+        await axios.post('http://127.0.0.1:8000/api/v1/womenlist', data, {headers: {"Authorization" : `Bearer ${this.$localStorage.get('access')}`}});
         await this.AxiosPerson()
       }
       catch (e){
-        console.log('Error Data');
+        if (e.response.status === 401){
+          this.error_authorize = true
+        }
       }
     },
+    async AxiosLikePerson(id, like){
+      try{
+        if (like.includes(this.$localStorage.get('id'))){
+          await axios.patch(`http://127.0.0.1:8000/api/v1/womenrelationupdate/${id}/`,{'like': false} ,{headers: {"Authorization" : `Bearer ${this.$localStorage.get('access')}`}});
+          let index = like.indexOf(this.$localStorage.get('id'))
+          like.splice(index,1)
+        }
+        else{
+          await axios.patch(`http://127.0.0.1:8000/api/v1/womenrelationupdate/${id}/`,{'like': true} ,{headers: {"Authorization" : `Bearer ${this.$localStorage.get('access')}`}});
+          like.push(this.$localStorage.get('id'))
+        }
+      }
+      catch (e){
+        if (e.response.status === 401){
+          try{
+            const response = await axios.post('http://127.0.0.1:8000/api/token/refresh/', {'refresh': this.$localStorage.get('refresh')})
+            this.$localStorage.set('access', response.data.access)
+            this.AxiosLikePerson(id, like)
+          }
+          catch (e){
+            this.$localStorage.remove('access')
+            this.$localStorage.remove('refresh')
+            this.$localStorage.remove('username')
+            this.$localStorage.remove('first_name')
+            this.$localStorage.remove('last_name')
+            this.$localStorage.remove('email')
+            this.$localStorage.remove('id')
+            this.$localStorage.set('verify', true)
+            location.reload()
+          }
+        }
+      }
+    },
+    async AxiosVerifyAccess(){
+      try{
+        await axios.post('http://127.0.0.1:8000/api/token/verify/', {'token': this.$localStorage.get('access')});
+      }
+      catch (e){
+        if (e.response.status === 401){
+          try{
+            const response = await axios.post('http://127.0.0.1:8000/api/token/refresh/', {'refresh': this.$localStorage.get('refresh')})
+            this.$localStorage.set('access', response.data.access)
+          }
+          catch (e){
+            if (e.response.status === 401){
+              this.$localStorage.remove('access')
+              this.$localStorage.remove('refresh')
+              this.$localStorage.remove('username')
+              this.$localStorage.remove('first_name')
+              this.$localStorage.remove('last_name')
+              this.$localStorage.remove('email')
+              this.$localStorage.remove('id')
+              this.$localStorage.set('verify', true)
+              location.reload()
+            }
+          }
+          // finally {
+          //   location.reload()
+          // }
+        }
+      }
+    }
     // search_list(event){
     //   this.women.filter((item) => item['name'].includes(event.target.value))
     // },
   },
   mounted() {
     this.AxiosPerson();
+    this.AxiosVerifyAccess();
     // const options = {
     //   rootMargin: '0px',
     //   threshold: 1.0,
@@ -172,6 +259,18 @@ export default {
     // };
     // const observer = new IntersectionObserver(callback, options);
     // observer.observe(this.$refs.observer)
+  },
+  // beforeUpdate() {
+  //   if (this.$localStorage.get('verify')){
+  //     this.error_authorize = true
+  //   }
+  // },
+  updated() {
+    if (this.$localStorage.get('verify')){
+      this.$router.push('/login')
+      // this.error_authorize = true
+      this.$localStorage.set('verify', false)
+    }
   },
   components: {
     NameApp,
@@ -235,5 +334,13 @@ export default {
   .observer{
     width: 100%;
     height: 50px;
+  }
+  .error_authorize{
+    position: fixed;
+    top: 160px;
+    left: 0;
+    color: red;
+    background-color: rgba(255,255,255,0.7);
+    font-size: 20px;
   }
 </style>

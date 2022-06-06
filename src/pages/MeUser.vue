@@ -55,7 +55,7 @@ export default {
     },
     async AxiosUpdateDataUser(){
       try{
-        const response = await axios.put('http://127.0.0.1:8000/api/v1/auth/users/me/', {"first_name": this.name ,"last_name": this.last_name, "email": this.email}, {headers: {"Authorization" : `Token ${this.$localStorage.get('token')}`}})
+        const response = await axios.put('http://127.0.0.1:8000/api/v1/auth/users/me/', {"first_name": this.name ,"last_name": this.last_name, "email": this.email}, {headers: {"Authorization" : `Bearer ${this.$localStorage.get('access')}`}})
         this.$localStorage.set('first_name', response.data.first_name)
         this.$localStorage.set('last_name', response.data.last_name)
         this.$localStorage.set('email', response.data.email)
